@@ -3,85 +3,710 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ryders and Jakes Casino</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Jake's & Ryder's Casino</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0a3d62;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .header {
+            background-color: #e74c3c;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .balance {
+            font-size: 24px;
+            margin: 20px 0;
+            background-color: #27ae60;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .game-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .game {
+            background-color: #34495e;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        .game:hover {
+            transform: scale(1.05);
+        }
+        .game h2 {
+            color: #f1c40f;
+            margin-top: 0;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin: 5px;
+            width: 100px;
+        }
+        .result {
+            margin: 15px 0;
+            font-weight: bold;
+            min-height: 20px;
+        }
+        .win {
+            color: #2ecc71;
+        }
+        .lose {
+            color: #e74c3c;
+        }
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        .slot {
+            font-size: 40px;
+            margin: 0 10px;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            background-color: white;
+            color: black;
+            border-radius: 5px;
+        }
+        .dice {
+            font-size: 60px;
+            margin: 15px 0;
+        }
+        .roulette-wheel {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(0deg, #e74c3c 0%, #e74c3c 50%, #000 50%, #000 100%);
+            margin: 0 auto 15px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        .roulette-ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            top: 10px;
+            left: 90px;
+        }
+        .cards {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        .card {
+            width: 60px;
+            height: 90px;
+            background-color: white;
+            color: black;
+            border-radius: 5px;
+            margin: 0 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .red {
+            color: #e74c3c;
+        }
+        .black {
+            color: black;
+        }
+        .chicken {
+            font-size: 50px;
+            margin: 15px 0;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">LUCKY SPIN</div>
-        <div class="balance">Balance: $<span id="balance">1000</span></div>
-    </header>
-    
-    <main>
-        <section class="hero">
-            <h1>Welcome to Ryders and Jakes Casino!</h1>
-            <p>Try your luck with our exciting games</p>
-        </section>
-        
-        <div class="category-buttons">
-            <button id="menBtn" class="active">MEN</button>
-            <button id="boysBtn">Boys</button>
-            <button id="childrenBtn">Children</button>
+    <div class="header">
+        <h1>🎰 Jake's & Ryder's Casino 🎲</h1>
+        <p>Where fortunes are made and lost in the blink of an eye!</p>
+    </div>
+
+    <div class="balance">
+        Your Balance: $<span id="balance">1000</span>
+    </div>
+
+    <div class="game-container">
+        <!-- Slot Machine -->
+        <div class="game">
+            <h2>💰 Slot Machine</h2>
+            <div class="slot-machine">
+                <div class="slot" id="slot1">🍒</div>
+                <div class="slot" id="slot2">🍋</div>
+                <div class="slot" id="slot3">🍊</div>
+            </div>
+            <input type="number" id="slotBet" min="1" placeholder="Bet amount" value="10">
+            <button onclick="playSlots()">Spin!</button>
+            <div class="result" id="slotResult"></div>
         </div>
-        
-        <section id="menSection" class="games-section">
-            <h2>Gambling Games</h2>
-            <div class="games-grid">
-                <div class="game-card" onclick="loadGame('slots')">
-                    <img src="https://m.media-amazon.com/images/I/71jXoPhYT9L.png" alt="Slot Machine">
-                    <h3>Lucky Slots</h3>
-                    <p>Spin to win big!</p>
-                </div>
-                <div class="game-card" onclick="loadGame('blackjack')">
-                    <img src="https://play-lh.googleusercontent.com/009hpXoLRxULWBEF8VsHnNTjFrOQVFKfkQfIxZcDGWtVSZEU5mKtSJyy3Zv3pxVcZQ" alt="Blackjack">
-                    <h3>Blackjack</h3>
-                    <p>Beat the dealer!</p>
-                </div>
-                <div class="game-card" onclick="loadGame('roulette')">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXWJNbzADxucQDXr3PZ7lCkrEcshic3Tlqmw&s" alt="Roulette">
-                    <h3>Roulette</h3>
-                    <p>Bet on your luck!</p>
-                </div>
-                <div class="game-card" onclick="loadGame('dice')">
-                    <img src="https://www.online-stopwatch.com/images/dice.png" alt="Dice Game">
-                    <h3>Dice Roll</h3>
-                    <p>High or low?</p>
-                </div>
-                <div class="game-card" onclick="loadGame('poker')">
-                    <img src="https://play-lh.googleusercontent.com/1O2XB9vK-rj0HSPZeeHwb3llRdpTg6bqN8qElSI3BT2u6rnr3i68O56QozDo3IpXIimJ" alt="Video Poker">
-                    <h3>Video Poker</h3>
-                    <p>Make the best hand!</p>
-                </div>
+
+        <!-- Dice Roll -->
+        <div class="game">
+            <h2>🎲 Dice Roll</h2>
+            <div class="dice" id="diceValue">⚀</div>
+            <input type="number" id="diceBet" min="1" placeholder="Bet amount" value="10">
+            <div>
+                <button onclick="rollDice('low')">Bet 1-3</button>
+                <button onclick="rollDice('high')">Bet 4-6</button>
+                <button onclick="rollDice('exact')">Exact Number</button>
             </div>
-        </section>
-        
-        <section id="boysSection" class="games-section" style="display:none;">
-            <h2>Boys Section</h2>
-            <div id="boysContent" class="external-link-container">
-                <!-- Content will be loaded here from boys.html -->
+            <input type="number" id="exactNumber" min="1" max="6" placeholder="Number" style="display: none;">
+            <div class="result" id="diceResult"></div>
+        </div>
+
+        <!-- American Roulette -->
+        <div class="game">
+            <h2>🎡 American Roulette</h2>
+            <div class="roulette-wheel">
+                <div class="roulette-ball"></div>
+                <div id="rouletteNumber">0</div>
             </div>
-        </section>
-        
-        <section id="childrenSection" class="games-section" style="display:none;">
-            <h2>Children's Games</h2>
-            <div id="childrenContent" class="external-link-container">
-                <!-- Content will be loaded here from children.html -->
+            <input type="number" id="rouletteBet" min="1" placeholder="Bet amount" value="10">
+            <div>
+                <button onclick="playRoulette('red')">Red</button>
+                <button onclick="playRoulette('black')">Black</button>
+                <button onclick="playRoulette('green')">Green</button>
             </div>
-        </section>
-    </main>
-    
-    <div id="gameModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div id="gameContainer"></div>
+            <div class="result" id="rouletteResult"></div>
+        </div>
+
+        <!-- Chicken Poker -->
+        <div class="game">
+            <h2>🐔 Chicken Poker</h2>
+            <div class="chicken">🐔</div>
+            <p>Will the chicken lay an egg or not?</p>
+            <input type="number" id="chickenBet" min="1" placeholder="Bet amount" value="10">
+            <div>
+                <button onclick="playChicken('egg')">Egg</button>
+                <button onclick="playChicken('noegg')">No Egg</button>
+            </div>
+            <div class="result" id="chickenResult"></div>
+        </div>
+
+        <!-- Card Guess -->
+        <div class="game">
+            <h2>🃏 Card Guess</h2>
+            <div class="cards">
+                <div class="card" id="card1">?</div>
+            </div>
+            <input type="number" id="cardBet" min="1" placeholder="Bet amount" value="10">
+            <div>
+                <button onclick="playCard('red')">Red</button>
+                <button onclick="playCard('black')">Black</button>
+                <button onclick="playCard('specific')">Specific</button>
+            </div>
+            <select id="cardValue" style="display: none; padding: 10px; border-radius: 5px; margin: 5px;">
+                <option value="A">Ace</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="J">Jack</option>
+                <option value="Q">Queen</option>
+                <option value="K">King</option>
+            </select>
+            <div class="result" id="cardResult"></div>
+        </div>
+
+        <!-- Coin Flip -->
+        <div class="game">
+            <h2>🪙 Coin Flip</h2>
+            <div style="font-size: 50px;" id="coinFace">🪙</div>
+            <input type="number" id="coinBet" min="1" placeholder="Bet amount" value="10">
+            <div>
+                <button onclick="flipCoin('heads')">Heads</button>
+                <button onclick="flipCoin('tails')">Tails</button>
+            </div>
+            <div class="result" id="coinResult"></div>
         </div>
     </div>
-    
-    <footer>
-        <p>To see balance check very top of page.</p>
-    </footer>
-    
-    <script src="script.js"></script>
+
+    <script>
+        // Global variables
+        let balance = 1000;
+        const balanceElement = document.getElementById('balance');
+        
+        // Update balance display
+        function updateBalance() {
+            balanceElement.textContent = balance;
+        }
+        
+        // Check if bet is valid
+        function isValidBet(betAmount) {
+            if (isNaN(betAmount) || betAmount <= 0) {
+                alert("Please enter a valid bet amount!");
+                return false;
+            }
+            if (betAmount > balance) {
+                alert("You don't have enough money for that bet!");
+                return false;
+            }
+            return true;
+        }
+        
+        // Slot Machine Game
+        function playSlots() {
+            const betAmount = parseInt(document.getElementById('slotBet').value);
+            if (!isValidBet(betAmount)) return;
+            
+            balance -= betAmount;
+            updateBalance();
+            
+            // Animate slots
+            const slots = ['🍒', '🍋', '🍊', '🍇', '🔔', '7️⃣', '💎'];
+            const slotElements = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
+            const resultElement = document.getElementById('slotResult');
+            
+            resultElement.textContent = "Spinning...";
+            resultElement.className = "result";
+            
+            let spins = 0;
+            const spinInterval = setInterval(() => {
+                for (let i = 0; i < 3; i++) {
+                    if (spins < 10 + i * 5) {
+                        slotElements[i].textContent = slots[Math.floor(Math.random() * slots.length)];
+                    }
+                }
+                spins++;
+                
+                if (spins >= 20) {
+                    clearInterval(spinInterval);
+                    
+                    // Final values
+                    const values = [
+                        slots[Math.floor(Math.random() * slots.length)],
+                        slots[Math.floor(Math.random() * slots.length)],
+                        slots[Math.floor(Math.random() * slots.length)]
+                    ];
+                    
+                    for (let i = 0; i < 3; i++) {
+                        slotElements[i].textContent = values[i];
+                    }
+                    
+                    // Check win
+                    if (values[0] === values[1] && values[1] === values[2]) {
+                        let multiplier = 5;
+                        if (values[0] === '7️⃣') multiplier = 10;
+                        if (values[0] === '💎') multiplier = 20;
+                        
+                        const winAmount = betAmount * multiplier;
+                        balance += winAmount;
+                        updateBalance();
+                        resultElement.textContent = `JACKPOT! You won $${winAmount}!`;
+                        resultElement.className = "result win";
+                    } else if (values[0] === values[1] || values[1] === values[2] || values[0] === values[2]) {
+                        const winAmount = Math.floor(betAmount * 1.5);
+                        balance += winAmount;
+                        updateBalance();
+                        resultElement.textContent = `You won $${winAmount} with a pair!`;
+                        resultElement.className = "result win";
+                    } else {
+                        resultElement.textContent = "You lost! Try again!";
+                        resultElement.className = "result lose";
+                    }
+                }
+            }, 100);
+        }
+        
+        // Dice Roll Game
+        function rollDice(betType) {
+            const betAmount = parseInt(document.getElementById('diceBet').value);
+            if (!isValidBet(betAmount)) return;
+            
+            const exactNumberInput = document.getElementById('exactNumber');
+            if (betType === 'exact') {
+                exactNumberInput.style.display = 'inline-block';
+                const exactNumber = parseInt(exactNumberInput.value);
+                if (isNaN(exactNumber) || exactNumber < 1 || exactNumber > 6) {
+                    alert("Please select a number between 1 and 6!");
+                    return;
+                }
+            } else {
+                exactNumberInput.style.display = 'none';
+            }
+            
+            balance -= betAmount;
+            updateBalance();
+            
+            const diceElement = document.getElementById('diceValue');
+            const resultElement = document.getElementById('diceResult');
+            
+            resultElement.textContent = "Rolling...";
+            resultElement.className = "result";
+            
+            let rolls = 0;
+            const rollInterval = setInterval(() => {
+                const randomValue = Math.floor(Math.random() * 6) + 1;
+                diceElement.textContent = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'][randomValue - 1];
+                rolls++;
+                
+                if (rolls >= 15) {
+                    clearInterval(rollInterval);
+                    
+                    // Final value
+                    const diceValue = Math.floor(Math.random() * 6) + 1;
+                    diceElement.textContent = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'][diceValue - 1];
+                    
+                    let win = false;
+                    let winAmount = 0;
+                    
+                    if (betType === 'low' && diceValue <= 3) {
+                        win = true;
+                        winAmount = betAmount * 2;
+                    } else if (betType === 'high' && diceValue >= 4) {
+                        win = true;
+                        winAmount = betAmount * 2;
+                    } else if (betType === 'exact') {
+                        const exactNumber = parseInt(exactNumberInput.value);
+                        if (diceValue === exactNumber) {
+                            win = true;
+                            winAmount = betAmount * 6;
+                        }
+                    }
+                    
+                    if (win) {
+                        balance += winAmount;
+                        updateBalance();
+                        resultElement.textContent = `You won $${winAmount}!`;
+                        resultElement.className = "result win";
+                    } else {
+                        resultElement.textContent = "You lost! Try again!";
+                        resultElement.className = "result lose";
+                    }
+                }
+            }, 100);
+        }
+        
+        // American Roulette Game
+        function playRoulette(betColor) {
+            const betAmount = parseInt(document.getElementById('rouletteBet').value);
+            if (!isValidBet(betAmount)) return;
+            
+            balance -= betAmount;
+            updateBalance();
+            
+            const rouletteNumberElement = document.getElementById('rouletteNumber');
+            const resultElement = document.getElementById('rouletteResult');
+            const ballElement = document.querySelector('.roulette-ball');
+            
+            resultElement.textContent = "Spinning...";
+            resultElement.className = "result";
+            
+            let spins = 0;
+            const spinInterval = setInterval(() => {
+                const randomNumber = Math.floor(Math.random() * 37); // 0-36
+                rouletteNumberElement.textContent = randomNumber;
+                
+                // Move the ball
+                const angle = (spins * 30 + randomNumber * 10) % 360;
+                ballElement.style.transform = `rotate(${angle}deg) translateY(80px) rotate(-${angle}deg)`;
+                
+                spins++;
+                
+                if (spins >= 20) {
+                    clearInterval(spinInterval);
+                    
+                    // Final value
+                    const finalNumber = Math.floor(Math.random() * 37);
+                    rouletteNumberElement.textContent = finalNumber;
+                    
+                    // Determine color
+                    let color;
+                    if (finalNumber === 0) {
+                        color = 'green';
+                    } else if ((finalNumber >= 1 && finalNumber <= 10) || (finalNumber >= 19 && finalNumber <= 28)) {
+                        color = (finalNumber % 2 === 0) ? 'black' : 'red';
+                    } else {
+                        color = (finalNumber % 2 === 0) ? 'red' : 'black';
+                    }
+                    
+                    // Update wheel color
+                    document.querySelector('.roulette-wheel').style.background = 
+                        color === 'red' ? 'linear-gradient(0deg, #e74c3c 0%, #e74c3c 50%, #000 50%, #000 100%)' :
+                        color === 'black' ? 'linear-gradient(0deg, #000 0%, #000 50%, #e74c3c 50%, #e74c3c 100%)' :
+                        'linear-gradient(0deg, #27ae60 0%, #27ae60 50%, #27ae60 50%, #27ae60 100%)';
+                    
+                    // Check win
+                    let win = false;
+                    let winAmount = 0;
+                    
+                    if (betColor === 'green' && finalNumber === 0) {
+                        win = true;
+                        winAmount = betAmount * 35;
+                    } else if (betColor === color && color !== 'green') {
+                        win = true;
+                        winAmount = betAmount * 2;
+                    }
+                    
+                    if (win) {
+                        balance += winAmount;
+                        updateBalance();
+                        resultElement.textContent = `You won $${winAmount}!`;
+                        resultElement.className = "result win";
+                    } else {
+                        resultElement.textContent = `The ball landed on ${color} ${finalNumber}. You lost!`;
+                        resultElement.className = "result lose";
+                    }
+                }
+            }, 100);
+        }
+        
+        // Chicken Poker Game
+        function playChicken(bet) {
+            const betAmount = parseInt(document.getElementById('chickenBet').value);
+            if (!isValidBet(betAmount)) return;
+            
+            balance -= betAmount;
+            updateBalance();
+            
+            const chickenElement = document.querySelector('.chicken');
+            const resultElement = document.getElementById('chickenResult');
+            
+            resultElement.textContent = "The chicken is thinking...";
+            resultElement.className = "result";
+            
+            let animations = 0;
+            const animateInterval = setInterval(() => {
+                chickenElement.textContent = Math.random() > 0.5 ? "🐔" : "🐣";
+                animations++;
+                
+                if (animations >= 10) {
+                    clearInterval(animateInterval);
+                    
+                    // Final outcome
+                    const laysEgg = Math.random() > 0.5;
+                    chickenElement.textContent = laysEgg ? "🥚" : "🐔";
+                    
+                    // Check win
+                    let win = false;
+                    let winAmount = 0;
+                    
+                    if ((bet === 'egg' && laysEgg) || (bet === 'noegg' && !laysEgg)) {
+                        win = true;
+                        winAmount = betAmount * 2;
+                    }
+                    
+                    if (win) {
+                        balance += winAmount;
+                        updateBalance();
+                        resultElement.textContent = `You won $${winAmount}!`;
+                        resultElement.className = "result win";
+                    } else {
+                        resultElement.textContent = laysEgg ? "The chicken laid an egg!" : "No egg this time!";
+                        resultElement.className = "result lose";
+                    }
+                }
+            }, 200);
+        }
+        
+        // Card Guess Game
+        function playCard(bet) {
+            const betAmount = parseInt(document.getElementById('cardBet').value);
+            if (!isValidBet(betAmount)) return;
+            
+            const cardValueSelect = document.getElementById('cardValue');
+            if (bet === 'specific') {
+                cardValueSelect.style.display = 'inline-block';
+                return;
+            } else {
+                cardValueSelect.style.display = 'none';
+            }
+            
+            balance -= betAmount;
+            updateBalance();
+            
+            const cardElement = document.getElementById('card1');
+            const resultElement = document.getElementById('cardResult');
+            
+            resultElement.textContent = "Drawing card...";
+            resultElement.className = "result";
+            
+            // Deck of cards
+            const suits = ['♥', '♦', '♠', '♣'];
+            const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+            
+            let flips = 0;
+            const flipInterval = setInterval(() => {
+                const randomSuit = suits[Math.floor(Math.random() * suits.length)];
+                const randomValue = values[Math.floor(Math.random() * values.length)];
+                cardElement.textContent = randomValue + randomSuit;
+                cardElement.className = `card ${randomSuit === '♥' || randomSuit === '♦' ? 'red' : 'black'}`;
+                flips++;
+                
+                if (flips >= 10) {
+                    clearInterval(flipInterval);
+                    
+                    // Final card
+                    const suit = suits[Math.floor(Math.random() * suits.length)];
+                    const value = values[Math.floor(Math.random() * values.length)];
+                    cardElement.textContent = value + suit;
+                    cardElement.className = `card ${suit === '♥' || suit === '♦' ? 'red' : 'black'}`;
+                    
+                    // Check win
+                    let win = false;
+                    let winAmount = 0;
+                    
+                    if (bet === 'red' && (suit === '♥' || suit === '♦')) {
+                        win = true;
+                        winAmount = betAmount * 2;
+                    } else if (bet === 'black' && (suit === '♠' || suit === '♣')) {
+                        win = true;
+                        winAmount = betAmount * 2;
+                    }
+                    
+                    if (win) {
+                        balance += winAmount;
+                        updateBalance();
+                        resultElement.textContent = `You won $${winAmount}!`;
+                        resultElement.className = "result win";
+                    } else {
+                        resultElement.textContent = "You lost! Try again!";
+                        resultElement.className = "result lose";
+                    }
+                }
+            }, 150);
+        }
+        
+        // Specific Card Guess
+        document.getElementById('cardValue').addEventListener('change', function() {
+            const betAmount = parseInt(document.getElementById('cardBet').value);
+            if (!isValidBet(betAmount)) return;
+            
+            balance -= betAmount;
+            updateBalance();
+            
+            const selectedValue = this.value;
+            const cardElement = document.getElementById('card1');
+            const resultElement = document.getElementById('cardResult');
+            
+            resultElement.textContent = "Drawing card...";
+            resultElement.className = "result";
+            
+            // Deck of cards
+            const suits = ['♥', '♦', '♠', '♣'];
+            const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+            
+            let flips = 0;
+            const flipInterval = setInterval(() => {
+                const randomSuit = suits[Math.floor(Math.random() * suits.length)];
+                const randomValue = values[Math.floor(Math.random() * values.length)];
+                cardElement.textContent = randomValue + randomSuit;
+                cardElement.className = `card ${randomSuit === '♥' || randomSuit === '♦' ? 'red' : 'black'}`;
+                flips++;
+                
+                if (flips >= 10) {
+                    clearInterval(flipInterval);
+                    
+                    // Final card
+                    const suit = suits[Math.floor(Math.random() * suits.length)];
+                    const value = values[Math.floor(Math.random() * values.length)];
+                    cardElement.textContent = value + suit;
+                    cardElement.className = `card ${suit === '♥' || suit === '♦' ? 'red' : 'black'}`;
+                    
+                    // Check win
+                    if (value === selectedValue) {
+                        const winAmount = betAmount * 13;
+                        balance += winAmount;
+                        updateBalance();
+                        resultElement.textContent = `JACKPOT! You won $${winAmount}!`;
+                        resultElement.className = "result win";
+                    } else {
+                        resultElement.textContent = "You lost! Try again!";
+                        resultElement.className = "result lose";
+                    }
+                }
+            }, 150);
+        });
+        
+        // Coin Flip Game
+        function flipCoin(bet) {
+            const betAmount = parseInt(document.getElementById('coinBet').value);
+            if (!isValidBet(betAmount)) return;
+            
+            balance -= betAmount;
+            updateBalance();
+            
+            const coinElement = document.getElementById('coinFace');
+            const resultElement = document.getElementById('coinResult');
+            
+            resultElement.textContent = "Flipping...";
+            resultElement.className = "result";
+            
+            let flips = 0;
+            const flipInterval = setInterval(() => {
+                coinElement.textContent = Math.random() > 0.5 ? "🪙" : "🦅";
+                flips++;
+                
+                if (flips >= 10) {
+                    clearInterval(flipInterval);
+                    
+                    // Final outcome
+                    const isHeads = Math.random() > 0.5;
+                    coinElement.textContent = isHeads ? "🪙" : "🦅";
+                    
+                    // Check win
+                    let win = false;
+                    let winAmount = 0;
+                    
+                    if ((bet === 'heads' && isHeads) || (bet === 'tails' && !isHeads)) {
+                        win = true;
+                        winAmount = betAmount * 2;
+                    }
+                    
+                    if (win) {
+                        balance += winAmount;
+                        updateBalance();
+                        resultElement.textContent = `You won $${winAmount}!`;
+                        resultElement.className = "result win";
+                    } else {
+                        resultElement.textContent = isHeads ? "It's heads!" : "It's tails!";
+                        resultElement.className = "result lose";
+                    }
+                }
+            }, 150);
+        }
+    </script>
 </body>
 </html>
